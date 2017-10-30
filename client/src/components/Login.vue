@@ -1,11 +1,8 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs3>
-      <div class="elevation-2">
-        <v-toolbar flat dense color="club" dark>
-          <v-toolbar-title >Login</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4 pt-2 pb-2">
+      <Panel title="登陆">
+        <div class="pl-4 pr-4 pt-2 pb-2" slot="content">
           <form>
             <v-text-field
                 label="Email"
@@ -25,31 +22,36 @@
                 counter
               ></v-text-field>
 
-            <div class="error" v-html="error">
-            </div>
+            <v-alert 
+              icon="warning" 
+              color="error" 
+              class="error"
+              :value="!!error"
+              transition="scale-transition">
+                {{error}}
+            </v-alert>
             <v-btn
               @click="login"
               dark
               color="club">
-              Login
+              登陆
             </v-btn>
           </form>
         </div>
-      </div>
+      </Panel>
     </v-flex>
   </v-layout>
-  
-  </div>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import Panel from '@/components/Panel'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Login',
   data () {
     return {
-      email: 'aaa@gmail.com',
+      email: 'aaa1@gmail.com',
       e1: false,
       password: '12345678',
       error: null
@@ -58,27 +60,28 @@ export default {
   methods: {
     async login () {
       try {
+        this.error = null
         const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
-
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+        this.$router.push({
+          path: '/'
+        })
       } catch (error) {
         this.error = error.response.data.error
       }
     }
+  },
+  components: {
+    Panel
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.error {
-  font:red;
-}
-
-
 
 </style>

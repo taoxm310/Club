@@ -1,11 +1,8 @@
 <template>
   <v-layout column>
     <v-flex xs6 offset-xs3>
-      <div class="elevation-2">
-        <v-toolbar flat dense color="club" dark>
-          <v-toolbar-title >Register</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4 pt-2 pb-2">
+      <Panel title="注册">
+        <div class="pl-4 pr-4 pt-2 pb-2" slot="content">
           <form autocomplete="false">
             <v-text-field
               label="Email"
@@ -25,47 +22,60 @@
               counter
             ></v-text-field>
 
-            <div class="error" v-html="error">
-            </div>
+            <v-alert 
+              icon="warning" 
+              color="error" 
+              class="error"
+              :value="!!error"
+              transition="scale-transition">
+                {{error}}
+            </v-alert>
             <v-btn
               @click="register"
               dark
               color="club">
-              Register
+              注册
             </v-btn>
           </form> 
         </div>
-      </div>  
-      </v-flex>
-    </v-layout>
-  </template>
+      </Panel>
+    </v-flex>
+  </v-layout>
+</template>
 
   <script>
   import AuthenticationService from '@/services/AuthenticationService'
-
+  import Panel from '@/components/Panel'
   export default {
-    name: 'HelloWorld',
+    name: 'Register',
     data () {
       return {
-        email: 'aaa@gmail.com',
+        email: null,
         e1: false,
-        password: '12345678',
+        password: null,
         error: null
       }
     },
     methods: {
       async register () {
         try {
+          this.error = null
           const response = await AuthenticationService.register({
             email: this.email,
             password: this.password
           })
           this.$store.dispatch('setToken', response.data.token)
           this.$store.dispatch('setUser', response.data.user)
+          this.$router.push({
+            path: '/'
+          })
         } catch (error) {
           this.error = error.response.data.error
         }
       }
+    },
+    components: {
+      Panel
     }
   }
 </script>

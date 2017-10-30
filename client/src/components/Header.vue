@@ -9,35 +9,53 @@
       </router-link>
     </v-toolbar-title>
     <v-toolbar-items>
-      <v-btn flat>
-        Browse
+      <v-btn 
+        flat 
+        to="/songs"
+        >
+        主页
       </v-btn>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn flat 
-      to="/register"
-      v-if="!$store.state.user">
-        SIGN UP
+      <v-btn 
+        flat 
+        to="/register"
+        v-if="!$store.state.user">
+        注册
       </v-btn>
     </v-toolbar-items>
     <v-toolbar-items>
-      <v-btn flat 
-      to="/login"
-      v-if="!$store.state.user">
-        LOGIN
+      <v-btn 
+        flat 
+        to="/login"
+        v-if="!$store.state.user">
+        登陆
       </v-btn>
     </v-toolbar-items> 
+        <v-toolbar-items>
+      <v-btn 
+        flat
+        @click="logout"
+        v-if="$store.state.user">
+        登出
+      </v-btn>
+    </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
+  name: 'PageHeader',
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        path: '/'
+      })
     }
   }
 }
