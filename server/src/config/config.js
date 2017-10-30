@@ -10,5 +10,8 @@ module.exports = {
       storage: './club.sqlite',
       operatorsAliases: false
     }
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'secret'
   }
 }
