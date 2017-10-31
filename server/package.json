@@ -5,7 +5,8 @@
   "scripts": {
     "start": "run-s lint dev",
     "dev": "nodemon src/app.js",
-    "lint": ".\\node_modules\\.bin\\eslint **/*.js"
+    "lint": ".\\node_modules\\.bin\\eslint **/*.js --fix",
+    "seed": "node ./seed/index.js"
   },
   "keywords": [],
   "author": "",

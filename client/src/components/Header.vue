@@ -13,7 +13,15 @@
         flat 
         to="/songs"
         >
-        主页
+        歌曲库
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-items>
+      <v-btn 
+        flat 
+        to="/todolist"
+        >
+        待办事项
       </v-btn>
     </v-toolbar-items>
 

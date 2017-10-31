@@ -21,6 +21,12 @@ fs
     db[model.name] = model
   })
 
+Object.keys(db).forEach(function (modeName) {
+  if ('associate' in db[modeName]) {
+    db[modeName].associate(db)
+  }
+})
+
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 module.exports = db

@@ -8,10 +8,14 @@ import 'vuetify/dist/vuetify.min.css'
 import './stylus/main.styl'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
+import Panel from '@/components/globals/Panel'
 
 Vue.config.productionTip = false
 
 sync(store, router)
+
+Vue.component('Panel', Panel)
+
 Vue.use(Vuetify)
 /* eslint-disable no-new */
 new Vue({

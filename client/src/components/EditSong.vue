@@ -62,10 +62,10 @@
           {{error}}
         </v-alert>
         <v-btn
-          @click="create"
+          @click="save"
           dark
           color="club">
-          创建
+          保存
         </v-btn>    
       </template>
     </Panel>
@@ -93,7 +93,7 @@ export default {
     }
   },
   methods: {
-    async create () {
+    async save () {
       this.error = null
       const areAllfieldsFilledIn = Object
       .keys(this.song)
@@ -103,14 +103,26 @@ export default {
         this.error = 'please fill all'
         return
       }
+      const songId = this.$store.state.route.params.songId
       try {
-        await SongsService.create(this.song)
+        await SongsService.put(songId, this.song)
         this.$router.push({
-          name: 'songs'
+          name: `song`,
+          params: {
+            songId
+          }
         })
       } catch (err) {
         console.log(err)
       }
+    }
+  },
+  async mounted () {
+    try {
+      const songId = this.$store.state.route.params.songId
+      this.song = (await SongsService.show(songId)).data
+    } catch (err) {
+      console.log(err)
     }
   }
 }
