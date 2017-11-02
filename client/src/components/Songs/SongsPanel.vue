@@ -1,5 +1,5 @@
 <template>
-  <Panel title="Songs">
+  <Panel title="歌曲">
     <template slot="action">
       <v-spacer></v-spacer>
         <v-btn

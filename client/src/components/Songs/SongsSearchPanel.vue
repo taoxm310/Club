@@ -1,5 +1,5 @@
 <template>
-  <Panel title="Search">
+  <Panel title="搜索">
     <v-text-field
       label="Search"
       v-model="search"

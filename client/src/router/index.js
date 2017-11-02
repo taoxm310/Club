@@ -7,6 +7,7 @@ import CreateSong from '@/components/CreateSong'
 import ViewSong from '@/components/ViewSong'
 import EditSong from '@/components/EditSong'
 import Todolist from '@/components/Todolist'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
@@ -14,7 +15,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home'
+      name: 'Home',
+      component: Home
     },
     {
       path: '/register',

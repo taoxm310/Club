@@ -8,7 +8,7 @@
         >Club
       </router-link>
     </v-toolbar-title>
-    <v-toolbar-items>
+    <v-toolbar-items v-if="isUserLogged">
       <v-btn 
         flat 
         to="/songs"
@@ -16,7 +16,7 @@
         歌曲库
       </v-btn>
     </v-toolbar-items>
-    <v-toolbar-items>
+    <v-toolbar-items v-if="isUserLogged">
       <v-btn 
         flat 
         to="/todolist"
@@ -55,8 +55,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'PageHeader',
+  computed: {
+    ...mapState([
+      'isUserLogged',
+      'user'
+    ])
+  },
   methods: {
     logout () {
       this.$store.dispatch('setToken', null)

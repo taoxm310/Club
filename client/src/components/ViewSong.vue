@@ -1,7 +1,7 @@
 <template>
 <v-layout>
   <v-flex xs6>
-      <Panel title="Song Metadata">
+      <Panel title="歌曲信息">
         <div slot="content">          
           <v-layout>
             <v-flex xs6>
@@ -46,7 +46,7 @@
   </v-flex>
 
   <v-flex xs6 class="ml-2">
-    <Panel title="Lyric">
+    <Panel title="歌词">
         <textarea
           slot="content"
           label="Lyric"
@@ -63,6 +63,8 @@
 import SongsService from '@/services/SongsService'
 import { mapState } from 'vuex'
 import BookmarksService from '@/services/BookmarksService'
+import SongHistoryService from '@/services/SongHistoryService'
+
 export default {
   name: 'ViewSong',
   data () {
@@ -73,7 +75,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isUserLogged'
+      'isUserLogged',
+      'user'
     ])
   },
   async mounted () {
@@ -86,10 +89,15 @@ export default {
 
     if (this.isUserLogged) {
       try {
-        this.bookmark = (await BookmarksService.index({
-          songId: this.song.id,
-          userId: this.$store.state.user.id
+        const bookmarks = (await BookmarksService.index({
+          songId: this.song.id
         })).data
+        if (bookmarks.length) {
+          this.bookmark = bookmarks[0]
+        }
+        SongHistoryService.post({
+          songId: this.song.id
+        })
       } catch (err) {
         console.log(err)
       }
@@ -99,8 +107,7 @@ export default {
     async setAsBookmark () {
       try {
         this.bookmark = (await BookmarksService.post({
-          songId: this.song.id,
-          userId: this.$store.state.user.id
+          songId: this.song.id
         })).data
       } catch (err) {
         console.log(err)
