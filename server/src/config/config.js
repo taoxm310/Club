@@ -7,7 +7,7 @@ module.exports = {
     password: process.env.DB_PASS || 'club',
     options: {
       dialect: process.env.DB_DIALECT || 'sqlite',
-      host: process.env.HOST || 'localhost',
+      host: process.env.HOST || '104.224.148.121',
       storage: path.resolve(__dirname, '../../club.sqlite'),
       operatorsAliases: false
     }

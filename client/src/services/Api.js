@@ -3,7 +3,7 @@ import store from '@/store/store'
 
 export default () => {
   return axios.create({
-    baseURL: 'http://localhost:8081/',
+    baseURL: 'http://104.224.148.121:8081/',
     headers: {
       Authorization: `Bearer ${store.state.token}`
     }

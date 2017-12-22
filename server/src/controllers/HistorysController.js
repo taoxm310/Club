@@ -27,7 +27,6 @@ module.exports = {
     try {
       const userId = req.user.id
       const { songId } = req.body
-      console.log(req)
       const history = await History.create({
         SongId: songId,
         UserId: userId

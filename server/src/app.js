@@ -11,10 +11,12 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use(express.static('../../client/dist'))
+
 require('./passport')
 require('./routes')(app)
 
-sequelize.sync({force: false})
+sequelize.sync()
   .then(() => {
     app.listen(process.env.PORT || 8081)
     console.log(`server start ${config.port}`)
